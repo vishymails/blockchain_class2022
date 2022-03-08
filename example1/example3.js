@@ -19,6 +19,14 @@ class Block {
             this.nonce++;
 
             this.hash = this.calculateHash();
+            
+            
+            console.log(this.nonce);
+            console.log(this.hash.substring(0, difficulty));
+            console.log(Array(difficulty + 1).join("0"));
+            console.log(this.hash);
+
+
         }
         console.log("Block mined : " + this.hash);
     }
@@ -28,7 +36,7 @@ class Block {
 class Blockchain {
     constructor() {
         this.chain = [this.createGenisisBlock()];
-        this.difficulty = 4;
+        this.difficulty = 2;
     }
 
     createGenisisBlock() {
