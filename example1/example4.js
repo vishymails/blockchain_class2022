@@ -119,8 +119,8 @@ class Blockchain {
 let bvrCoin = new Blockchain();
 
 
-bvrCoin.createTransaction(new Transaction('address1', 'address2', 100));
-bvrCoin.createTransaction(new Transaction('address2', 'address1', 50));
+bvrCoin.createTransaction(new Transaction('address1', 'address2', 1000));
+//bvrCoin.createTransaction(new Transaction('address2', 'address1', 50));
 
 console.log("Start Mining");
 bvrCoin.minePendingTransactions('rao-address');
