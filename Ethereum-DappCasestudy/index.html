@@ -1,0 +1,118 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+</head>
+<body>
+    <div class="container">
+
+        <h1>Oracle student</h1>
+
+        <span id="countIns"></span>
+
+        <h2 id="student"></h2>
+        <span id="insTrans"></span>
+        <hr>
+
+        <img id="loader" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif">
+
+        <label for="fName" class="col-lg-2 control-label">First Name</label>
+        <input id="fName" type="text">
+
+        <label for="lName" class="col-lg-2 control-label">Last Name</label>
+        <input id="lName" type="text">
+
+        <label for="age" class="col-lg-2 control-label">student Age</label>
+        <input id="age" type="text">
+
+        <button id="button">Update student</button>
+
+    </div>
+
+
+    <!--jquery, dojo, vinilla Javascript, reactjs, angular 8/ 9, vue.js  -->
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+       <script src="js/bootstrap.min.js"></script>
+
+<script>
+  if (typeof web3 !== 'undefined') {
+       web3 = new Web3(web3.currentProvider);
+     } else {
+       web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+     }
+
+     // Set Account
+     web3.eth.defaultAccount = web3.eth.accounts[0];
+
+
+contractAbi = [
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_fName",
+				"type": "string"
+			},
+			{
+				"name": "_age",
+				"type": "uint256"
+			}
+		],
+		"name": "setStudent",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getStudent",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+
+ var Oracle = new web3.eth.Contract(contractAbi, '0xc2A108d9602cbf88710F0C1C04Eb1C37Df0822f2');
+
+console.log (Oracle);
+
+
+Oracle.getStudent( function(error, result) {
+  if(!error) {
+    $('#student').html(result[0] + '(' + result[1] + 'years old)');
+  }
+  else
+    console.log("ERROR : " + error);
+
+});
+
+$('#button').click(function(){
+  Oracle.setStudent($("#age").val(), $("#fName").val(), $("#lName").val() );
+});
+
+
+</script>
+
+  </body>
+</html>
